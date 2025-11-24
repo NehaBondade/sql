@@ -50,6 +50,34 @@ We want to create employee shifts, splitting up the day into morning and evening
 
 #### Prompt 3
 The store wants to keep customer addresses. Propose two architectures for the CUSTOMER_ADDRESS table, one that will retain changes, and another that will overwrite. Which is type 1, which is type 2? 
+Option 1: Retain changes
+    customer_address
+----------------------------
+    customer_id
+    customer_name
+    address
+    street
+    city
+    postal_code
+    effective_start_date
+    effective_end_date
+    is_current
+
+Whenver customer moves, a new record is inserted. effective_end_date is updated and is_cuurent column will be updates as "N"
+This solution will help us retain historical data. This will be SCD type 2.
+
+Option 2: Overwrite changes
+    customer_address
+----------------------------
+    customer_id
+    customer_name
+    address
+    street
+    city
+    postal_code
+    last_update_timestamp
+
+Whenever customer moves, record is updated only reatining the latest addresses by updating the address fields. This is SCD type 1 as no history of customer is maintained.
 
 **HINT:** search type 1 vs type 2 slowly changing dimensions. 
 
